@@ -22,10 +22,10 @@ public class StudentController {
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "0") int p,
                         @RequestParam(name = "size", defaultValue = "4")  int s,
-                        @RequestParam(name = "keyword", defaultValue = "")  String kw)
-    {
+                        @RequestParam(name = "keyword", defaultValue = "")  String kw
+    ){
 
-        Page<Student> pageStudents = studentRepository.findByNomContains(kw, PageRequest.of(p, s));
+        Page<Student> pageStudents = studentRepository.findByFullNameContains(kw, PageRequest.of(p,s));
         model.addAttribute("ListStudents", pageStudents.getContent());
         // return the total number of pages
         model.addAttribute("pages", new int[pageStudents.getTotalPages()]);
@@ -35,8 +35,8 @@ public class StudentController {
         return "students";
     }
     @GetMapping("/deleteStudent")
-    public String delete(@RequestParam(name= "id") Long idStudent) {
+    public String delete(@RequestParam(name= "id") Long idStudent, String keyword, int page) {
         studentRepository.deleteById(idStudent);
-        return "redirect:/index";
+        return "redirect:/index?page="+page+"&keyword="+keyword;
     }
 }

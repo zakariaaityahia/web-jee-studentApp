@@ -8,8 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
-    Page<Student> findByNomContains(String keyword, Pageable pageable);
-    @Query("select p from student p where p.full_name like :x")
-    Page<Student> Charcher(@Param("x") String keyword, Pageable pageable);
+    Page<Student> findByFullNameContains(String keyword, Pageable pageable);
+    @Query("select p from Student p where p.fullName like :x")
+    Page<Student> charcher(@Param("x") String keyword, Pageable pageable);
 
 }

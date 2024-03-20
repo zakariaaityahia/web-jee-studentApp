@@ -42,7 +42,6 @@ public class EnglishExamApplication {
 
 			Student p4 = new Student(null, "Yasmine Ali", new Date(), 21, false);
 			Student p5 = new Student(null, "Omar Hadi", new Date(), 22, true);
-				Student p8 = new Student(null, "Ahmed Amely", new Date(), 18, true);
 			Student p7 = new Student(null, "Mohammed Sabir", new Date(), 19, true);
 			Student p6 = new Student(null, "Fatima Khalid", new Date(), 20, false);
 
@@ -54,7 +53,6 @@ public class EnglishExamApplication {
 			studentRepository.save(p5);
 			studentRepository.save(p6);
 			studentRepository.save(p7);
-			studentRepository.save(p8);
 
 
 			List<Student> students = studentRepository.findAll();
