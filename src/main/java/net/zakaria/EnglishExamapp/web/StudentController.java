@@ -39,4 +39,9 @@ public class StudentController {
         studentRepository.deleteById(idStudent);
         return "redirect:/index?page="+page+"&keyword="+keyword;
     }
+    @GetMapping("/formStudents")
+    public String formStudents(Model model) {
+        model.addAttribute("Students", new Student());
+        return "formStudents";
+    }
 }
