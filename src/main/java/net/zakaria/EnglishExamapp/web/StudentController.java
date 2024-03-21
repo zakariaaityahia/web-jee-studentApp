@@ -1,5 +1,6 @@
 package net.zakaria.EnglishExamapp.web;
 
+import jakarta.validation.Valid;
 import net.zakaria.EnglishExamapp.entities.Student;
 import net.zakaria.EnglishExamapp.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.querydsl.QPageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -41,7 +44,26 @@ public class StudentController {
     }
     @GetMapping("/formStudents")
     public String formStudents(Model model) {
-        model.addAttribute("Students", new Student());
+        model.addAttribute("student", new Student());
         return "formStudents";
+    }
+
+    @PostMapping("/save")
+    public String save(Model model, @Valid Student student, BindingResult bindingResult,
+                                    @RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "")String keyword) {
+        if (bindingResult.hasErrors()) return "formStudents";
+        studentRepository.save(student);
+        return "redirect:/index?page"+page+"&keyword="+keyword;
+    }
+
+    @GetMapping("/editStudents")
+    public String editStudents(Model model, Long id, String keyword, int page) {
+        Student student = studentRepository.findById(id).orElse(null);
+        if(student == null) throw new RuntimeException("Student introuvable");
+        model.addAttribute("student", student);
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("page", page);
+        return "editStudents";
     }
 }

@@ -19,7 +19,7 @@ public class EnglishExamApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EnglishExamApplication.class, args);
 	}
-	@Bean
+	//@Bean
 	public CommandLineRunner start(StudentRepository studentRepository) {
 		return args -> {
 			// NoArgsConstructor
