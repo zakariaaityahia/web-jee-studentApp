@@ -1,5 +1,8 @@
 <h3>JEE WEB APP / H2 DATABASE</h3>
 
+Activité Pratique N°3 - Spring MVC Thymeleaf Spring Security 
+Zakaria ait yahia - the same exercise but with another class name and attributes [ExamApp]
+
 <img src="Output/Students_marks-h2DB.PNG">
 <img src="Output/StudentsTable.PNG">
 <h2>latest update // add form validation and edit function, navigation // mySQL database</h2>
