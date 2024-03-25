@@ -21,7 +21,7 @@ public class StudentController {
     @Autowired
     private StudentRepository studentRepository;
 
-    @GetMapping("/index")
+    @GetMapping("/user/index")
     public String index(Model model,
                         @RequestParam(name = "page", defaultValue = "0") int p,
                         @RequestParam(name = "size", defaultValue = "4")  int s,
@@ -37,27 +37,27 @@ public class StudentController {
         model.addAttribute("keyword", kw);
         return "students";
     }
-    @GetMapping("/deleteStudent")
+    @GetMapping("/admin/deleteStudent")
     public String delete(@RequestParam(name= "id") Long idStudent, String keyword, int page) {
         studentRepository.deleteById(idStudent);
-        return "redirect:/index?page="+page+"&keyword="+keyword;
+        return "redirect:/user/index?page="+page+"&keyword="+keyword;
     }
-    @GetMapping("/formStudents")
+    @GetMapping("/admin/formStudents")
     public String formStudents(Model model) {
         model.addAttribute("student", new Student());
         return "formStudents";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/admin/save")
     public String save(Model model, @Valid Student student, BindingResult bindingResult,
                                     @RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "")String keyword) {
         if (bindingResult.hasErrors()) return "formStudents";
         studentRepository.save(student);
-        return "redirect:/index?page"+page+"&keyword="+keyword;
+        return "redirect:/user/index?page"+page+"&keyword="+keyword;
     }
 
-    @GetMapping("/editStudents")
+    @GetMapping("/admin/editStudents")
     public String editStudents(Model model, Long id, String keyword, int page) {
         Student student = studentRepository.findById(id).orElse(null);
         if(student == null) throw new RuntimeException("Student introuvable");
@@ -65,5 +65,9 @@ public class StudentController {
         model.addAttribute("keyword", keyword);
         model.addAttribute("page", page);
         return "editStudents";
+    }
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/user/index";
     }
 }

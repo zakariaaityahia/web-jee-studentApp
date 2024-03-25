@@ -16,7 +16,7 @@
     <div class="card">
         <div class="card-header">Students list</div>
         <div class="card-body">
-            <form method="get" th:action="@{index}">
+            <form method="get" th:action="@{/user/index}">
                 <label>Keyword:</label>
                 <input type="text" name="keyword" th:value="${keyword}"/>
                 <button type="submit" class="btn btn-success">
@@ -41,20 +41,20 @@
                     <td th:text="${p.birth}"></td>
                     <td th:text="${p.mark}"></td>
                     <td th:text="${p.status}"></td>
-                    <td>
+                    <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                         <a onclick="return confirm('are you sure you want to delete this student ?')" class="btn btn-danger"
-                           th:href="@{deleteStudent(id=${p.id}, keyword=${keyword}, page=${currentPage})}" >Delete</a>
+                           th:href="@{/admin/deleteStudent(id=${p.id}, keyword=${keyword}, page=${currentPage})}" >Delete</a>
                     </td>
-                    <td>
+                    <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
                         <a class="btn btn-primary"
-                           th:href="@{editStudents(id=${p.id}, keyword=${keyword}, page=${currentPage})}" >Edit</a>
+                           th:href="@{/admin/editStudents(id=${p.id}, keyword=${keyword}, page=${currentPage})}" >Edit</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
             <ul class="nav nav-pills">
                 <li th:each="p, s:${pages}">
-                    <a th:href="@{index(page=${s.index}, keyword=${keyword})}" th:text="${s.index}"
+                    <a th:href="@{/user/index(page=${s.index}, keyword=${keyword})}" th:text="${s.index}"
                     th:class="${currentPage == s.index?'btn btn-dark ms-1':'btn btn-outline-dark ms-1 mt-1'}"
                     ></a>
                 </li>
